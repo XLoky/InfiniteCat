@@ -121,16 +121,18 @@ main{
     bottom: 0;
     right: 0;
     display: flex;
-    width: 200px;
+    width: 100px;
     justify-content: space-around;
     margin-bottom: 8px;
 }
-.moon{
+.moon, .paintroller{
     font-size: 24px;
     color: #222;
     cursor: pointer;
     user-select: none;
     transition: color .2s;
+    z-index: 400;
+    text-shadow: 1px 1px 3px #666;
 }
 
 aside{
@@ -177,6 +179,19 @@ aside{
     overflow-y: scroll;
     transition: background .2s;
 }
+.aside__container::-webkit-scrollbar{
+    background-color: #fcfcfc;
+}
+.aside__container::-webkit-scrollbar-thumb{
+    border: solid #fcfcfc 3px;
+    border-radius: 100px;
+    background-color: #8b8b8b;
+}
+.aside__container::-webkit-scrollbar-thumb:hover{
+    border: solid #fcfcfc 3px;
+    border-radius: 100px;
+    background-color: #767676;
+}
 .aside__container-div{
     height: 36px;
     padding: 9px 10px 8px;
@@ -192,6 +207,7 @@ aside{
     cursor: pointer;
     transition: background .2s;
 }
+
 .aside__container-div--cloned{
     height: 36px;
     padding: 9px 10px 8px;
@@ -246,9 +262,21 @@ aside{
     padding-bottom: 16px;
     transition: opacity .4s, transform .4s;
     background-color: #fff;
-    z-index: 100000;
+    z-index: 300;
     box-shadow: #666 0px 0px 10px;
     transition: background .2s color .2s outline .2s;
+}
+.catcontainerremove{
+    animation: catcontainerremove .2s;
+    animation-fill-mode: forwards;
+}
+@keyframes catcontainerremove {
+    from{
+        transform: scale(100%);
+    }to{
+        transform: scale(0%);
+        opacity: 0;
+    }
 }
 .catcontainer h2{
     font-size: 18px;
@@ -334,8 +362,13 @@ aside{
         align-self: center;
     }
 }
-.aside__container-div:hover{
-    background: linear-gradient(to top, #0002, transparent);
+.aside__container-div-light:hover{
+    background: linear-gradient(to top, #d8fcff, transparent);
+    border: solid 1px #91a8c1;
+}
+.aside__container-div-dark:hover{
+    background: linear-gradient(to bottom, #d8fcff55, transparent);
+    border: solid 1px #91a8c1;
 }
 .aside__container-div p{
     margin: 0 2px;
@@ -344,21 +377,6 @@ aside{
     display: flex;
     align-items: center;
     flex-basis: 6%;
-}
-.aside__searchbox i{
-    font-size: 20px;
-    color: #bbb;
-    margin: 0 16px;
-    cursor: pointer;
-    height: 40px;
-    width: 40px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    transition: color .2s, transform .2s;
-}
-.aside__searchbox i:hover{
-    transform: scale(110%);
 }
 .aside__searchbox input::placeholder{
     font-size: 16px;
@@ -370,5 +388,74 @@ aside{
     color: #222;
     font-weight: 500;
     height: 100%;
+    width: 100%;
     transition: background .2s;
+    margin-left: 16px;
+}
+
+@media screen and (max-width: 1150px) {
+    body{
+        overflow: hidden;
+        display: grid;
+        grid-template-columns: 1fr 300px;
+        grid-template-rows: 1fr;
+    }    
+    aside{
+        position: relative;
+        height: 100vh;
+        right: 0;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px #888 solid;
+        background-color: #fff;
+        transition: background .2s;
+        z-index: 100;
+    }
+    .aside__container-div{
+        height: 32px;
+        padding: 9px 10px 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin: 4px;
+        border-radius: 5px;
+        border: #888 solid 1px;
+        font-size: 13.5px;
+        font-weight: 500;
+        user-select: none;
+        cursor: pointer;
+        transition: background .2s;
+    }
+    .aside__container{
+        position: relative;
+        display: flex;
+        flex-wrap: wrap;
+        flex-basis: 100%;
+        border-bottom: 1px solid #888;
+        align-content: flex-start;
+        background-color: #fff;
+        padding: 10px;
+        overflow-y: scroll;
+        transition: background .2s;
+    }
+    .aside__searchbox{
+        display: flex;
+        align-items: center;
+        flex-basis: 40px;
+    }
+    .aside__searchbox input::placeholder{
+        font-size: 13.5px;
+        color: #bbb;
+        font-weight: 300;
+    }
+    .aside__searchbox input{
+        font-size: 13.5px;
+        color: #222;
+        font-weight: 500;
+        height: 100%;
+        width: 100%;
+        transition: background .2s;
+        margin-left: 16px;
+    }
 }

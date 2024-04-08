@@ -3,6 +3,150 @@ const aside = document.querySelector("aside");
 let api;
 var darkModeOn = false;
 
+
+const darkMode = () =>{
+    if(!darkModeOn){
+        aside.style.backgroundColor = '#000';
+        for(let i = 0; i < document.querySelectorAll(".aside__container-div").length; i++){
+            document.querySelectorAll(".aside__container-div")[i].style.color = 'white';
+            document.querySelectorAll(".aside__container-div")[i].classList.replace("aside__container-div-light","aside__container-div-dark")
+        }
+        document.querySelector(".aside__container").style.backgroundColor = '#000';
+        document.querySelector("aside input").style.backgroundColor = '#000';
+        document.querySelector("aside input").style.color = '#fff';
+        document.querySelector(".logo").removeChild(document.querySelector(".logo img"));
+        let img = document.createElement("IMG");
+        document.querySelector(".logo").appendChild(img);
+        fetch("logodark.png").then(res => res.blob()).then(res => img.src = URL.createObjectURL(res));
+        main.style.backgroundColor = '#000';
+        document.querySelector(".ig").style.color = '#ddd';
+        document.querySelector(".moon").style.color = '#fff';
+        document.querySelector(".paintroller").style.color = '#fff';
+        try{
+            let numberOfClonedDivs;
+            numberOfClonedDivs = document.querySelectorAll(".aside__container-div--cloned").length;
+            for(let i = 0; i < numberOfClonedDivs; i++){
+                document.querySelectorAll(".aside__container-div--cloned")[i].style.backgroundColor = '#000';
+                document.querySelectorAll(".aside__container-div--cloned")[i].style.color = '#fff';
+            }
+        }catch(e){};
+
+        for(let i = 0; i < document.querySelectorAll(".catcontainer").length; i++){
+            document.querySelectorAll(".catcontainer")[i].style.backgroundColor = '#000';
+            document.querySelectorAll(".catcontainer")[i].style.color = '#fff';
+            document.querySelectorAll(".catcontainer")[i].style.outlineColor = '#ddd';
+            document.querySelectorAll(".catcontainer__divImg")[i].style.borderBottom = 'solid 1px #ddd';
+            try{
+                document.querySelectorAll(".pre")[i].style.backgroundColor = '#222';
+            }catch(e){}
+        }
+
+        let scrollBarRule = document.createElement("STYLE");
+        try{
+            document.head.removeChild(".scrollbarstyle");
+        }catch(e){}
+        scrollBarRule.classList.add("scrollbarstyle");
+        scrollBarRule.innerHTML = `
+            .aside__container::-webkit-scrollbar{
+                background-color: #030303;
+            }
+            .aside__container::-webkit-scrollbar-thumb{
+                background-color: #fff;
+                border: solid #030303 3px;
+                border-radius: 100px;
+            }
+            .aside__container::-webkit-scrollbar-thumb:hover{
+                border: solid #030303 3px;
+                border-radius: 100px;
+                background-color: #ddd;
+            }
+        `;
+        setTimeout(() => {
+            document.head.appendChild(scrollBarRule);
+        }, 40);
+
+
+        darkModeOn = true;
+    }else{
+        aside.style.backgroundColor = '#fff';
+        for(let i = 0; i < document.querySelectorAll(".aside__container-div").length; i++){
+            document.querySelectorAll(".aside__container-div")[i].style.color = '#000';
+            document.querySelectorAll(".aside__container-div")[i].classList.replace("aside__container-div-dark","aside__container-div-light");
+        }
+        document.querySelector(".aside__container").style.backgroundColor = '#fff';
+        document.querySelector("aside input").style.backgroundColor = '#fff';
+        document.querySelector("aside input").style.color = '#000';
+        document.querySelector(".logo").removeChild(document.querySelector(".logo img"));
+        let img = document.createElement("IMG");
+        document.querySelector(".logo").appendChild(img);
+        fetch("logo.png").then(res => res.blob()).then(res => img.src = URL.createObjectURL(res));
+        main.style.backgroundColor = '#fff';
+        document.querySelector(".ig").style.color = '#222';
+        document.querySelector(".moon").style.color = '#000';
+        document.querySelector(".paintroller").style.color = '#000';
+
+        
+
+        try{
+            let numberOfClonedDivs;
+            numberOfClonedDivs = document.querySelectorAll(".aside__container-div--cloned").length;
+            for(let i = 0; i < numberOfClonedDivs; i++){
+                document.querySelectorAll(".aside__container-div--cloned")[i].style.backgroundColor = '#fff';
+                document.querySelectorAll(".aside__container-div--cloned")[i].style.color = '#000';
+            }
+        }catch(e){};
+
+        for(let i = 0; i < document.querySelectorAll(".catcontainer").length; i++){
+            document.querySelectorAll(".catcontainer")[i].style.backgroundColor = '#fff';
+            document.querySelectorAll(".catcontainer")[i].style.color = '#000';
+            document.querySelectorAll(".catcontainer")[i].style.outlineColor = '#222';
+            document.querySelectorAll(".catcontainer__divImg")[i].style.borderBottom = 'solid 1px #222';
+            try{
+                document.querySelectorAll(".pre")[i].style.backgroundColor = '#ddd';
+            }catch(e){}
+        }
+
+        let scrollBarRule = document.createElement("STYLE");
+        try{
+            document.head.removeChild(".scrollbarstyle");
+        }catch(e){}
+        scrollBarRule.classList.add("scrollbarstyle");
+        scrollBarRule.innerHTML = `
+            .aside__container::-webkit-scrollbar{
+                transition: background .2s;
+                background-color: #fcfcfc;
+            }
+            .aside__container::-webkit-scrollbar-thumb{
+                border: solid #fcfcfc 3px;
+                border-radius: 100px;
+                transition: background .2s;
+                background-color: #8b8b8b;
+            }
+            .aside__container::-webkit-scrollbar-thumb:hover{
+                border: solid #fcfcfc 3px;
+                border-radius: 100px;
+                background-color: #767676;
+            }
+        `;
+        setTimeout(() => {
+            document.head.appendChild(scrollBarRule);
+        }, 40);
+
+        darkModeOn = false;
+    }
+}
+
+const clean = () => {
+    const catcontainerDivs = document.querySelectorAll(".catcontainer").length;
+    for(let i = 0; i < catcontainerDivs; i++){
+        console.log(document.querySelectorAll(".catcontainer").length)
+        document.querySelectorAll(".catcontainer")[i].classList.add("catcontainerremove");
+        setTimeout(() => {
+            main.removeChild(document.querySelectorAll(".catcontainer")[0]);
+        }, 200);
+    }
+}
+document.querySelector(".paintroller").addEventListener("click",clean)
 addEventListener("load",async()=>{
 
     await fetch("https://api.thecatapi.com/v1/images/search?size=med&mime_types=jpg&format=json&has_breeds=true&order=RANDOM&limit=100",{
@@ -11,6 +155,7 @@ addEventListener("load",async()=>{
     }).then(res => res.json()).then(res => {
         api = res;
         document.querySelector(".aside__loading").style.display = 'none'; //HIDES LOADING DIV
+        document.querySelector(".moon").addEventListener("click",darkMode);
         let catnames = [];
         const emojis = ['🐈','😹','😺','😻','😼','🙀','😿','😽'];
         for(let i = 0; i < 100; i++){
@@ -26,6 +171,7 @@ addEventListener("load",async()=>{
         for(let i = 0; i < unique.length; i++){
             let div = document.createElement("DIV");
             div.classList.add("aside__container-div");
+            div.classList.add("aside__container-div-light");
             let p = [];
             p[0] = document.createElement("P");
             p[0].textContent = emojis[Math.floor(Math.random() * 8)];
@@ -39,14 +185,60 @@ addEventListener("load",async()=>{
             div.addEventListener("mousedown",e => createDivOnClick(e,i));
             document.querySelector(".aside__container").appendChild(div);
         }
+
+        const searchBox = document.querySelector(".aside__searchbox input");
+        let searchedCats;
+        const search = () => {
+            if(searchBox.value != ''){
+                searchedCats = unique.filter(catname => { //CREATES AN ARRAY WITH JUST THE DESIRED CATS
+                for(let i = 0; i < searchBox.value.length; i++){
+                    if(!catname.includes(searchBox.value[i].toLowerCase()) && !catname.includes(searchBox.value[i].toUpperCase())) break;
+                    else {
+                        if(i == searchBox.value.length - 1) return catname;
+                    }
+                }
+
+                for(let i = 0; i < document.querySelector(".aside__container").children.length; i++){ //REMOVES ALL DIVS FROM ASIDE CONTENT
+                    document.querySelector(".aside__container").innerHTML = '';
+                }
+                })
+            }else{
+                searchedCats = unique;
+                for(let i = 0; i < document.querySelector(".aside__container").children.length; i++){ //REMOVES ALL DIVS FROM ASIDE CONTENT
+                    document.querySelector(".aside__container").innerHTML = '';
+                }
+            }
+
+            for(let i = 0; i < searchedCats.length; i++){ //ADDS DESIRED CATS
+                let div = document.createElement("DIV");
+                div.classList.add("aside__container-div");
+                if(darkModeOn) div.classList.add("aside__container-div-dark");
+                else div.classList.add("aside__container-div-light");
+                let p = [];
+                p[0] = document.createElement("P");
+                p[0].textContent = emojis[Math.floor(Math.random() * 8)];
+                p[1] = document.createElement("P");
+                try{
+                    p[1].textContent = searchedCats[i];
+                }catch(e){}
+                if(darkModeOn) div.style.color = '#fff';
+            
+                div.appendChild(p[0]);
+                div.appendChild(p[1]);
+                div.addEventListener("mousedown",e => createDivOnClick(e,i));
+                document.querySelector(".aside__container").appendChild(div);
+            }
+        }
+        document.querySelector(".aside__searchbox input").addEventListener("input",search);
     });
     
 
 })
 
-let circleDOM = [];
 
-for(let i = 0; i < 40; i++){
+
+let circleDOM = [];
+for(let i = 0; i < 120; i++){ // CREATE BG DOTS
     let circle = document.createElement("DIV");
     circleDOM[i] = circle;
     let rand = Math.floor(Math.random() * (5 - 3) + 3);
@@ -71,82 +263,7 @@ for(let i = 0; i < 40; i++){
 
 }
 
-const darkMode = () =>{
-    if(!darkModeOn){
-        aside.style.backgroundColor = '#000';
-        for(let i = 0; i < document.querySelectorAll(".aside__container-div").length; i++){
-            document.querySelectorAll(".aside__container-div")[i].style.color = 'white';
-        }
-        document.querySelector(".aside__container").style.backgroundColor = '#000';
-        document.querySelector("aside input").style.backgroundColor = '#000';
-        document.querySelector("aside input").style.color = '#fff';
-        document.querySelector(".logo").removeChild(document.querySelector(".logo img"));
-        let img = document.createElement("IMG");
-        document.querySelector(".logo").appendChild(img);
-        fetch("logodark.png").then(res => res.blob()).then(res => img.src = URL.createObjectURL(res));
-        main.style.backgroundColor = '#000';
-        document.querySelector(".ig").style.color = '#ddd';
-        document.querySelector(".moon").style.color = '#fff';
-        try{
-            let numberOfClonedDivs;
-            numberOfClonedDivs = document.querySelectorAll(".aside__container-div--cloned").length;
-            for(let i = 0; i < numberOfClonedDivs; i++){
-                document.querySelectorAll(".aside__container-div--cloned")[i].style.backgroundColor = '#000';
-                document.querySelectorAll(".aside__container-div--cloned")[i].style.color = '#fff';
-            }
-        }catch(e){};
 
-        for(let i = 0; i < document.querySelectorAll(".catcontainer").length; i++){
-            document.querySelectorAll(".catcontainer")[i].style.backgroundColor = '#000';
-            document.querySelectorAll(".catcontainer")[i].style.color = '#fff';
-            document.querySelectorAll(".catcontainer")[i].style.outlineColor = '#ddd';
-            document.querySelectorAll(".catcontainer__divImg")[i].style.borderBottom = 'solid 1px #ddd';
-            try{
-                document.querySelectorAll(".pre")[i].style.backgroundColor = '#222';
-            }catch(e){}
-        }
-
-        darkModeOn = true;
-    }else{
-        aside.style.backgroundColor = '#fff';
-        for(let i = 0; i < document.querySelectorAll(".aside__container-div").length; i++){
-            document.querySelectorAll(".aside__container-div")[i].style.color = '#000'
-        }
-        document.querySelector(".aside__container").style.backgroundColor = '#fff';
-        document.querySelector("aside input").style.backgroundColor = '#fff';
-        document.querySelector("aside input").style.color = '#000';
-        document.querySelector(".logo").removeChild(document.querySelector(".logo img"));
-        let img = document.createElement("IMG");
-        document.querySelector(".logo").appendChild(img);
-        fetch("logo.png").then(res => res.blob()).then(res => img.src = URL.createObjectURL(res));
-        main.style.backgroundColor = '#fff';
-        document.querySelector(".ig").style.color = '#222';
-        document.querySelector(".moon").style.color = '#000'
-
-        try{
-            let numberOfClonedDivs;
-            numberOfClonedDivs = document.querySelectorAll(".aside__container-div--cloned").length;
-            for(let i = 0; i < numberOfClonedDivs; i++){
-                document.querySelectorAll(".aside__container-div--cloned")[i].style.backgroundColor = '#fff';
-                document.querySelectorAll(".aside__container-div--cloned")[i].style.color = '#000';
-            }
-        }catch(e){};
-
-        for(let i = 0; i < document.querySelectorAll(".catcontainer").length; i++){
-            document.querySelectorAll(".catcontainer")[i].style.backgroundColor = '#fff';
-            document.querySelectorAll(".catcontainer")[i].style.color = '#000';
-            document.querySelectorAll(".catcontainer")[i].style.outlineColor = '#222';
-            document.querySelectorAll(".catcontainer__divImg")[i].style.borderBottom = 'solid 1px #222';
-            try{
-                document.querySelectorAll(".pre")[i].style.backgroundColor = '#ddd';
-            }catch(e){}
-        }
-
-        darkModeOn = false;
-    }
-}
-
-document.querySelector(".moon").addEventListener("click",darkMode);
 
 
 
@@ -186,8 +303,10 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     let statsList = [];
     let cat;
     for(n in api){
+        console.log(`n:${n}\n${api[n].breeds[0].name}\ncatName: ${catName}`)
         if(api[n].breeds[0].name == catName){
             cat = api[n];
+            break;
         }
     }
     for(n in cat.breeds[0]){
@@ -198,7 +317,6 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     if(statsList[0][1] == 'alt_names'){ //JAVANESE BUG
         statsList = statsList.splice(1)
     }
-    console.log(statsList)
     statsList = statsList.sort();
     statsList.reverse();
     for(n in statsList){
@@ -267,7 +385,10 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     x.classList.add("fa-solid");
     x.classList.add("fa-xmark");
     x.addEventListener("click", ()=>{
-        main.removeChild(container);
+        container.classList.add("catcontainerremove");
+        setTimeout(() => {
+            main.removeChild(container);
+        }, 200);
     })
     container.appendChild(x);
     main.appendChild(container);
