@@ -272,7 +272,7 @@ aside{
 }
 @keyframes catcontainerremove {
     from{
-        transform: scale(100%);
+        
     }to{
         transform: scale(0%);
         opacity: 0;
@@ -393,7 +393,7 @@ aside{
     margin-left: 16px;
 }
 
-@media screen and (max-width: 1150px) {
+@media screen and (max-width: 1150px) and (min-width: 800px) {
     body{
         overflow: hidden;
         display: grid;
@@ -457,5 +457,101 @@ aside{
         width: 100%;
         transition: background .2s;
         margin-left: 16px;
+    }
+}
+@media screen and (max-width: 800px) {
+    body{
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        height: 100vh;
+    }    
+    main{
+        height: 80vh;
+        position: relative;
+        transition: background .2s;
+    }
+    aside{
+        position: relative;
+        height: 20vh;
+        width: 100%;
+        display: flex;
+        flex-direction: column;
+        border-left: 1px #888 solid;
+        border-top: 1px #888 solid;
+        background-color: #fff;
+        transition: background .2s;
+        z-index: 100;
+    }
+    .aside__container-div{
+        height: 32px;
+        padding: 9px 10px 8px;
+        display: flex;
+        flex-direction: row;
+        justify-content: space-around;
+        align-items: center;
+        margin: 4px;
+        border-radius: 5px;
+        border: #888 solid 1px;
+        font-size: 13.5px;
+        font-weight: 500;
+        user-select: none;
+        cursor: pointer;
+        transition: background .2s;
+    }
+    .aside__container{
+        position: relative;
+        display: flex;
+        flex-direction: column;
+        height: 180px;
+        flex-wrap: wrap;
+        flex-basis: 100%;
+        border-bottom: 1px solid #888;
+        align-content: flex-start;
+        background-color: #fff;
+        padding: 10px;
+        overflow-x: scroll;
+        overflow-y: hidden;
+        transition: background .2s;
+    }
+    .aside__searchbox{
+        display: flex;
+        align-items: center;
+        flex-basis: 40px;
+    }
+    .aside__searchbox input::placeholder{
+        font-size: 13.5px;
+        color: #bbb;
+        font-weight: 300;
+    }
+    .aside__searchbox input{
+        font-size: 13.5px;
+        color: #222;
+        font-weight: 500;
+        height: 100%;
+        width: 100%;
+        transition: background .2s;
+        margin-left: 16px;
+    }
+    .aside__loading img{
+        height: 100px;
+        width: 100px;
+        animation: loading infinite 2s linear;
+    }
+    .catcontainer{
+        position: absolute;
+        width: 260px;
+        border-radius: 20px;
+        outline: solid 1px #222;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        overflow: hidden;
+        padding-bottom: 16px;
+        transition: opacity .4s, transform .4s;
+        background-color: #fff;
+        z-index: 300;
+        box-shadow: #666 0px 0px 10px;
+        transition: background .2s color .2s outline .2s;
     }
 }

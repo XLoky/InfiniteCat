@@ -139,7 +139,7 @@ const darkMode = () =>{
 const clean = () => {
     const catcontainerDivs = document.querySelectorAll(".catcontainer").length;
     for(let i = 0; i < catcontainerDivs; i++){
-        console.log(document.querySelectorAll(".catcontainer").length)
+        // console.log(document.querySelectorAll(".catcontainer").length)
         document.querySelectorAll(".catcontainer")[i].classList.add("catcontainerremove");
         setTimeout(() => {
             main.removeChild(document.querySelectorAll(".catcontainer")[0]);
@@ -278,8 +278,13 @@ const createDivOnClick = (e,nChild) => {
     let div = document.createElement("DIV");
     div.classList.add("pre");
     fatherNode.appendChild(div);
-    fatherNode.style.top = `${target.offsetTop - document.querySelector(".aside__container").scrollTop}px`;
-    fatherNode.style.left = `${target.offsetLeft + main.offsetWidth}px`;
+    if(window.innerWidth > 800) {
+        fatherNode.style.top = `${target.offsetTop - document.querySelector(".aside__container").scrollTop}px`;
+        fatherNode.style.left = `${target.offsetLeft + main.offsetWidth}px`;
+    }else{
+        fatherNode.style.top = `${target.offsetTop + main.offsetHeight}px`;
+        fatherNode.style.left = `${target.offsetLeft - document.querySelector(".aside__container").scrollLeft}px`;
+    }
 
     if(darkModeOn){
         node.style.backgroundColor = '#000';
@@ -303,7 +308,7 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     let statsList = [];
     let cat;
     for(n in api){
-        console.log(`n:${n}\n${api[n].breeds[0].name}\ncatName: ${catName}`)
+        // console.log(`n:${n}\n${api[n].breeds[0].name}\ncatName: ${catName}`)
         if(api[n].breeds[0].name == catName){
             cat = api[n];
             break;
@@ -395,13 +400,13 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     dragElement(container,false);
     img.addEventListener("load",()=>{
         container.style.opacity = 1;
-        container.style.transform = 'scale(100%)';
+        if(window.innerWidth > 800) container.style.transform = 'scale(100%)';
+        else container.style.transform = 'scale(70%)';
         document.querySelector(".aside__container-div--clonedheader").style.transform = 'scale(0%)';
         setTimeout(() => {
             try{
                 main.removeChild(elmnt);
             }catch(e){
-                console.log("Duplicate bug")
                 main.removeChild(main.lastChild)
             }
         }, 300);
