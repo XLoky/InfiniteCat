@@ -160,6 +160,15 @@ const clean = () => {
             main.removeChild(document.querySelectorAll(".catcontainer")[0]);
         }, 200);
     }
+
+    if(audioOn){
+        let createAudio = document.createElement("AUDIO");
+        createAudio.setAttribute("src","delete.wav");
+        audioIterator++;
+        createAudio.setAttribute("autoplay","true");
+        createAudio.setAttribute("display","none");
+        main.appendChild(createAudio);
+    }
 }
 document.querySelector(".paintroller").addEventListener("click",clean)
 addEventListener("load",async()=>{
