@@ -2,7 +2,22 @@ const main = document.querySelector("main");
 const aside = document.querySelector("aside");
 let api;
 var darkModeOn = false;
+var audioOn = true;
 
+
+
+const changeVolume = () =>{
+    if(audioOn){
+        document.querySelector(".volumeOn").style.opacity = 0;
+        document.querySelector(".volumeOff").style.opacity = 1;
+        audioOn = false;
+    }else{
+        document.querySelector(".volumeOn").style.opacity = 1;
+        document.querySelector(".volumeOff").style.opacity = 0;
+        audioOn = true;
+    }
+}
+document.querySelector(".volumeOff").addEventListener("click",changeVolume);
 
 const darkMode = () =>{
     if(!darkModeOn){
@@ -266,8 +281,26 @@ for(let i = 0; i < 120; i++){ // CREATE BG DOTS
 
 
 
-
+let audioIterator = 0;
 const createDivOnClick = (e,nChild) => {
+    if(audioOn){
+        let createAudio = document.createElement("AUDIO");
+        if(audioIterator > 3) audioIterator = 0; 
+        switch(audioIterator){
+            case 0: createAudio.setAttribute("src","select.wav"); break;
+            case 1: createAudio.setAttribute("src","select2.wav"); break;
+            case 2: createAudio.setAttribute("src","select3.wav"); break;
+            case 3: createAudio.setAttribute("src","select4.wav"); break;
+        }
+        setTimeout(() => {
+            main.removeChild(createAudio);
+        }, 200);
+        audioIterator++;
+        createAudio.setAttribute("autoplay","true");
+        createAudio.setAttribute("display","none");
+        main.appendChild(createAudio);
+    }
+
     let target;
     if(e.target.nodeName == 'P') target = e.target.parentElement;
     else target = e.target;
@@ -391,8 +424,21 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     x.classList.add("fa-xmark");
     x.addEventListener("click", ()=>{
         container.classList.add("catcontainerremove");
+
+        if(audioOn){
+            let createAudio = document.createElement("AUDIO");
+            createAudio.setAttribute("src","delete.wav");
+            audioIterator++;
+            createAudio.setAttribute("autoplay","true");
+            createAudio.setAttribute("display","none");
+            main.appendChild(createAudio);
+        }
+
         setTimeout(() => {
             main.removeChild(container);
+            try{
+                document.body.removeChild(createAudio);
+            }catch(e){}
         }, 200);
     })
     container.appendChild(x);
