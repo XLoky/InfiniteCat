@@ -173,6 +173,10 @@ const clean = () => {
         createAudio.setAttribute("autoplay","true");
         createAudio.setAttribute("display","none");
         main.appendChild(createAudio);
+
+        setTimeout(() => {
+            main.removeChild(createAudio);
+        }, 1000);
     }
 }
 document.querySelector(".paintroller").addEventListener("click",clean)
@@ -300,7 +304,7 @@ const createDivOnClick = (e,nChild) => {
         createAudio.setAttribute("src","select.wav");
         setTimeout(() => {
             main.removeChild(createAudio);
-        }, 200);
+        }, 1000);
 
         createAudio.setAttribute("autoplay","true");
         createAudio.setAttribute("display","none");
@@ -445,7 +449,7 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
             try{
                 document.body.removeChild(createAudio);
             }catch(e){}
-        }, 200);
+        }, 1000);
     })
     container.appendChild(x);
     main.appendChild(container);
