@@ -37,6 +37,9 @@ const darkMode = () =>{
         document.querySelector(".ig").style.color = '#ddd';
         document.querySelector(".moon").style.color = '#fff';
         document.querySelector(".paintroller").style.color = '#fff';
+        document.querySelector(".volumeOn").style.color = '#fff';
+        document.querySelector(".volumeOff").style.color = '#fff';
+
         try{
             let numberOfClonedDivs;
             numberOfClonedDivs = document.querySelectorAll(".aside__container-div--cloned").length;
@@ -97,8 +100,10 @@ const darkMode = () =>{
         fetch("logo.png").then(res => res.blob()).then(res => img.src = URL.createObjectURL(res));
         main.style.backgroundColor = '#fff';
         document.querySelector(".ig").style.color = '#222';
-        document.querySelector(".moon").style.color = '#000';
-        document.querySelector(".paintroller").style.color = '#000';
+        document.querySelector(".moon").style.color = '#222';
+        document.querySelector(".paintroller").style.color = '#222';
+        document.querySelector(".volumeOn").style.color = '#222';
+        document.querySelector(".volumeOff").style.color = '#222';
 
         
 
@@ -164,7 +169,7 @@ const clean = () => {
     if(audioOn){
         let createAudio = document.createElement("AUDIO");
         createAudio.setAttribute("src","delete.wav");
-        audioIterator++;
+        createAudio.volume = .5;
         createAudio.setAttribute("autoplay","true");
         createAudio.setAttribute("display","none");
         main.appendChild(createAudio);
@@ -260,7 +265,6 @@ addEventListener("load",async()=>{
 })
 
 
-
 let circleDOM = [];
 for(let i = 0; i < 120; i++){ // CREATE BG DOTS
     let circle = document.createElement("DIV");
@@ -290,21 +294,14 @@ for(let i = 0; i < 120; i++){ // CREATE BG DOTS
 
 
 
-let audioIterator = 0;
 const createDivOnClick = (e,nChild) => {
     if(audioOn){
         let createAudio = document.createElement("AUDIO");
-        if(audioIterator > 3) audioIterator = 0; 
-        switch(audioIterator){
-            case 0: createAudio.setAttribute("src","select.wav"); break;
-            case 1: createAudio.setAttribute("src","select2.wav"); break;
-            case 2: createAudio.setAttribute("src","select3.wav"); break;
-            case 3: createAudio.setAttribute("src","select4.wav"); break;
-        }
+        createAudio.setAttribute("src","select.wav");
         setTimeout(() => {
             main.removeChild(createAudio);
         }, 200);
-        audioIterator++;
+
         createAudio.setAttribute("autoplay","true");
         createAudio.setAttribute("display","none");
         main.appendChild(createAudio);
@@ -436,8 +433,8 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
 
         if(audioOn){
             let createAudio = document.createElement("AUDIO");
+            createAudio.volume = .5;
             createAudio.setAttribute("src","delete.wav");
-            audioIterator++;
             createAudio.setAttribute("autoplay","true");
             createAudio.setAttribute("display","none");
             main.appendChild(createAudio);

@@ -550,6 +550,7 @@ aside{
         width: 100px;
         animation: loading infinite 2s linear;
         margin-bottom: 40px;
+        transform: scale(70%);
     }
     .catcontainer{
         position: absolute;
