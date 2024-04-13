@@ -1,3 +1,4 @@
+"use strict";
 const main = document.querySelector("main");
 const aside = document.querySelector("aside");
 let api;
@@ -173,10 +174,6 @@ const clean = () => {
         createAudio.setAttribute("autoplay","true");
         createAudio.setAttribute("display","none");
         main.appendChild(createAudio);
-
-        setTimeout(() => {
-            main.removeChild(createAudio);
-        }, 1000);
     }
 }
 document.querySelector(".paintroller").addEventListener("click",clean)
@@ -304,7 +301,7 @@ const createDivOnClick = (e,nChild) => {
         createAudio.setAttribute("src","select.wav");
         setTimeout(() => {
             main.removeChild(createAudio);
-        }, 1000);
+        }, 200);
 
         createAudio.setAttribute("autoplay","true");
         createAudio.setAttribute("display","none");
@@ -350,14 +347,14 @@ const createDivOnClick = (e,nChild) => {
 const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     let statsList = [];
     let cat;
-    for(n in api){
+    for(let n in api){
         // console.log(`n:${n}\n${api[n].breeds[0].name}\ncatName: ${catName}`)
         if(api[n].breeds[0].name == catName){
             cat = api[n];
             break;
         }
     }
-    for(n in cat.breeds[0]){
+    for(let n in cat.breeds[0]){
         if(cat.breeds[0][n] >= 0 && cat.breeds[0][n] < 6 && cat.breeds[0][n] != ' '){
             statsList.push([cat.breeds[0][n],n]);
         }
@@ -367,12 +364,12 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     }
     statsList = statsList.sort();
     statsList.reverse();
-    for(n in statsList){
+    for(let n in statsList){
         if(statsList[n][0] == 0){
             statsList = statsList.splice(0,n);
         }
     }
-    for(n in statsList){
+    for(let n in statsList){
         let letter = statsList[n][1][0].toUpperCase();
         statsList[n][1] = statsList[n][1].replace("_"," ");
         statsList[n][1] = letter + statsList[n][1].slice(1);
@@ -397,7 +394,7 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
     let catcontainerInfoStats = document.createElement("DIV");
     catcontainerInfoStats.classList.add("catcontainer__info-stats");
     let fragmentoContenedor = document.createDocumentFragment();
-    for(n in statsList){
+    for(let n in statsList){
         let fragmento = document.createDocumentFragment();
         let p = document.createElement("P");
         p.textContent = statsList[n][1];
@@ -449,7 +446,7 @@ const createCatContainer = (catName,left,top,elmntwidth,elmnt) => {
             try{
                 document.body.removeChild(createAudio);
             }catch(e){}
-        }, 1000);
+        }, 200);
     })
     container.appendChild(x);
     main.appendChild(container);
